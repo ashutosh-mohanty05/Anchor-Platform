@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { unstable_after as after } from "next/server";
+import { after } from "next/server";
 import { getOwnerUserId } from "@/lib/auth";
 import connectToDatabase from "@/lib/mongodb";
 import Event from "@/models/Event";
