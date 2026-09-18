@@ -1,0 +1,36 @@
+name: Reminder cron
+
+# Vercel's Hobby plan only allows once-a-day Cron Jobs, but reminders need
+# to fire on time throughout the day -- so instead of vercel.json's cron
+# (removed), a GitHub Action pings /api/reminders/due on a schedule. Free,
+# needs no extra account since the code already lives on GitHub.
+#
+# One-time setup:
+#   1. Repo → Settings → Secrets and variables → Actions → New repository secret
+#      - APP_URL      e.g. https://your-app.vercel.app  (no trailing slash)
+#      - CRON_SECRET  the same value as the CRON_SECRET env var on Vercel
+#   2. Repo → Settings → Actions → General → Workflow permissions:
+#      make sure Actions are enabled for this repo (they are by default).
+#   3. That's it -- this workflow starts running on the schedule below once
+#      merged to the default branch. You can also trigger it manually from
+#      the Actions tab ("Run workflow") to test it right away.
+#
+# Note: GitHub only guarantees scheduled workflows run *approximately* on
+# time -- under load it can be a few minutes late, and workflows in
+# inactive repos can be paused after 60 days with no activity (re-enable
+# from the Actions tab if that happens). For sub-minute precision, use an
+# always-on service like cron-job.org instead (see the setup guide).
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch: {}
+
+jobs:
+  ping-reminders-due:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call /api/reminders/due
+        run: |
+          curl --fail --silent --show-error \
+            "${{ secrets.APP_URL }}/api/reminders/due?secret=${{ secrets.CRON_SECRET }}"
