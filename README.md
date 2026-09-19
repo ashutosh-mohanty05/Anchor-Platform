@@ -14,7 +14,8 @@ A personal event-management and client-booking assistant built for Vaishnavi, an
 
 | Splash screen | Add event (dashboard) | Public booking page |
 |---|---|---|
-| ![Splash screen](<img width="1533" height="695" alt="image" src="https://github.com/user-attachments/assets/278012c1-488f-4787-aac4-1b55db0b6793" />) | ![Add event form](<img width="522" height="603" alt="image" src="https://github.com/user-attachments/assets/8057ce0e-42a9-404f-85fc-6650b432290c" />) | ![Public booking page](<img width="581" height="681" alt="image" src="https://github.com/user-attachments/assets/06453fc5-9e0b-4987-b0f6-2e984ed5961c" />) |
+| ![Splash screen]<img width="1533" height="695" alt="image" src="https://github.com/user-attachments/assets/470e25f9-2a41-47e3-b263-9f188ff1f4de" />
+ | ![Add event form](<img width="522" height="603" alt="image" src="https://github.com/user-attachments/assets/8057ce0e-42a9-404f-85fc-6650b432290c" />) | ![Public booking page](<img width="581" height="681" alt="image" src="https://github.com/user-attachments/assets/06453fc5-9e0b-4987-b0f6-2e984ed5961c" />) |
 
 ## What's inside
 
