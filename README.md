@@ -4,7 +4,6 @@
 
 A personal event-management and client-booking assistant built for Vaishnavi, an event anchor/host. It manages her shows, keeps her schedule realistic (accounting for travel, prep, and buffer time), lets clients check her availability and request bookings without needing her private calendar, and gives her reusable WhatsApp-ready message templates — all for ₹0/month on free tiers.
 
-**Live app:** [book-vaishnavi.vercel.app](https://book-vaishnavi.vercel.app)
 
 > **Before you do anything else, read [`VAISHNAVIS_STAGE_SETUP_STEPS.md`](./VAISHNAVIS_STAGE_SETUP_STEPS.md).** It walks through every step from "empty folder" to "live on the internet."
 >
