@@ -4,12 +4,20 @@
 
 A personal event-management and client-booking assistant built for Vaishnavi, an event anchor/host. It manages her shows, keeps her schedule realistic (accounting for travel, prep, and buffer time), lets clients check her availability and request bookings without needing her private calendar, and gives her reusable WhatsApp-ready message templates — all for ₹0/month on free tiers.
 
+**Live app:** [book-vaishnavi.vercel.app](https://book-vaishnavi.vercel.app)
+
 > **Before you do anything else, read [`VAISHNAVIS_STAGE_SETUP_STEPS.md`](./VAISHNAVIS_STAGE_SETUP_STEPS.md).** It walks through every step from "empty folder" to "live on the internet."
 >
-> Already deployed and want it to feel snappier? See
-> [`PRODUCTION_SMOOTHNESS_GUIDE.md`](./PRODUCTION_SMOOTHNESS_GUIDE.md) — what
-> was slowing things down, what was fixed, and how to verify it in your own
-> deployment.
+> Already deployed and want it to feel snappier? See [`PRODUCTION_SMOOTHNESS_GUIDE.md`](./PRODUCTION_SMOOTHNESS_GUIDE.md) — what was slowing things down, what was fixed, and how to verify it in your own deployment.
+
+## Screenshots
+
+| Splash screen | Add event (dashboard) | Public booking page |
+|---|---|---|
+| ![Splash screen](<img width="1533" height="695" alt="image" src="https://github.com/user-attachments/assets/87c5f3ad-5ef1-48ea-b309-9367066dbc1f" />
+) | ![Add event form](<img width="522" height="603" alt="image" src="https://github.com/user-attachments/assets/8057ce0e-42a9-404f-85fc-6650b432290c" />
+) | ![Public booking page](<img width="581" height="681" alt="image" src="https://github.com/user-attachments/assets/06453fc5-9e0b-4987-b0f6-2e984ed5961c" />
+) |
 
 ## What's inside
 
@@ -25,7 +33,7 @@ A personal event-management and client-booking assistant built for Vaishnavi, an
 
 ## Tech stack
 
-Next.js 14 (App Router) · React 18 · TypeScript · Tailwind CSS · shadcn/ui-style primitives (Radix) · Lucide icons · Framer Motion · MongoDB Atlas + Mongoose · Zod · React Hook Form · `ics` for calendar export · Vercel Hobby plan.
+Next.js (App Router) · React · TypeScript · Tailwind CSS · shadcn/ui-style primitives (Radix) · Lucide icons · Framer Motion · MongoDB Atlas + Mongoose · Zod · React Hook Form · `ics` for calendar export · Vercel Hobby plan.
 
 There is no login system — this is a single-owner app, built specifically for Vaishnavi to use alone.
 
@@ -33,7 +41,7 @@ No Supabase, Firebase, Prisma, paid WhatsApp Business API, paid SMS, paid email,
 
 ## Quick start
 
-```bash
+```
 npm install
 cp .env.example .env.local   # then fill in your own values
 npm run dev
@@ -50,13 +58,15 @@ app/
   book/                    Public availability + booking request flow
   api/                     Route handlers: events, bookings, availability, templates, settings, ai
   globals.css              Theme system (CSS variables per theme)
-  layout.tsx / manifest.ts
+  layout.tsx / manifest.ts / icon.png
 
 components/                UI components, incl. components/ui/ primitives
 lib/                       mongodb, auth, scheduling, validations, calendar (.ics), whatsapp, availability, utils
 models/                    Mongoose schemas: User, Event, Client, MessageTemplate, BookingRequest, Reminder, Settings
 hooks/use-theme.ts
 public/icons/              PWA icons
+public/og-icon.png         Social link preview image (Open Graph)
+screenshots/                README preview images
 ```
 
 ## ⚠️ Security note: no login
@@ -65,4 +75,4 @@ The dashboard has no authentication at all — anyone with the URL can open `/`,
 
 ## A note on this build
 
-Every file in this project is real, working source code, not a mockup. `npm install`, `tsc --noEmit`, `next lint`, and `next build` have all been run and pass cleanly against this exact codebase. The one thing that can't be verified from this sandbox is a live MongoDB connection and Google Fonts access at build time — both work normally on a real host (e.g. Vercel) with internet access and a real `MONGODB_URI`.
+Every file in this project is real, working source code, not a mockup. `npm install`, `tsc --noEmit`, `next lint`, and `next build` have all been run and pass cleanly against this exact codebase.
