@@ -15,6 +15,7 @@ const body = Nunito({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://book-vaishnavi.vercel.app"),
   title: "Vaishnavi's Stage",
   description: "Every show. Every booking. Every moment.",
   manifest: "/manifest.webmanifest",
@@ -22,6 +23,27 @@ export const metadata: Metadata = {
     capable: true,
     statusBarStyle: "default",
     title: "Vaishnavi's Stage",
+  },
+  openGraph: {
+    title: "Vaishnavi's Stage",
+    description: "Every show. Every booking. Every moment.",
+    url: "https://book-vaishnavi.vercel.app",
+    siteName: "Vaishnavi's Stage",
+    images: [
+      {
+        url: "/og-icon.png",
+        width: 1200,
+        height: 630,
+        alt: "Vaishnavi's Stage",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Vaishnavi's Stage",
+    description: "Every show. Every booking. Every moment.",
+    images: ["/og-icon.png"],
   },
 };
 
