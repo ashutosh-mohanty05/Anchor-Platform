@@ -93,7 +93,7 @@ export async function checkTimeAvailability(
     const bs = toMinutes(block.startTime);
     const be = toMinutes(block.endTime === "23:59" ? "24:00" : block.endTime);
     if (s < be && e > bs) {
-      return { available: false, reason: "Vaishnavi is at her day job during that time." };
+      return { available: false, reason: "Vaishnavi is unavailable during that time." };
     }
   }
 
