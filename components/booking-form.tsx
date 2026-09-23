@@ -238,7 +238,7 @@ export default function BookingForm({ initialDate }: { initialDate?: string }) {
           </div>
           <div className="space-y-1.5">
             <Label>Expected Audience Size</Label>
-            <Input type="number" value={form.audienceSize} onChange={(e) => update("audienceSize", e.target.value)} />
+            <Input type="number" required min={1} value={form.audienceSize} onChange={(e) => update("audienceSize", e.target.value)} />
           </div>
         </div>
       )}
