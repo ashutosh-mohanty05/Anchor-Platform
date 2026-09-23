@@ -21,6 +21,10 @@ type CheckState =
   | { state: "unavailable"; reason?: string }
   | { state: "error" };
 
+function Req() {
+  return <span className="ml-0.5 text-destructive" aria-hidden="true">*</span>;
+}
+
 export default function BookingForm({ initialDate }: { initialDate?: string }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -92,6 +96,11 @@ export default function BookingForm({ initialDate }: { initialDate?: string }) {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+    if (!form.audienceSize || Number(form.audienceSize) < 1) {
+      setError("Please enter the expected audience size.");
+      document.getElementById("audienceSize")?.focus();
+      return;
+    }
     if (!form.consent) {
       setError("Please confirm you understand this is a request, not a confirmed booking.");
       return;
@@ -141,12 +150,12 @@ export default function BookingForm({ initialDate }: { initialDate?: string }) {
       </div>
 
       <div className="space-y-1.5">
-        <Label>Your Name</Label>
+        <Label>Your Name<Req /></Label>
         <Input required value={form.clientName} onChange={(e) => update("clientName", e.target.value)} placeholder="Rohan Mehta" />
       </div>
 
       <div className="space-y-1.5">
-        <Label>Phone Number</Label>
+        <Label>Phone Number<Req /></Label>
         <Input required value={form.phone} onChange={(e) => update("phone", e.target.value)} placeholder="98765 43210" />
       </div>
 
@@ -161,7 +170,7 @@ export default function BookingForm({ initialDate }: { initialDate?: string }) {
       </div>
 
       <div className="space-y-1.5">
-        <Label>Event Date</Label>
+        <Label>Event Date<Req /></Label>
         <Input type="date" required value={form.preferredDate} onChange={(e) => update("preferredDate", e.target.value)} />
       </div>
 
@@ -212,9 +221,18 @@ export default function BookingForm({ initialDate }: { initialDate?: string }) {
       </div>
 
       <div className="space-y-1.5">
-  <Label>Expected Audience Size</Label>
-  <Input type="number" required min={1} value={form.audienceSize} onChange={(e) => update("audienceSize", e.target.value)} />
-</div>
+        <Label htmlFor="audienceSize">Expected Audience Size<Req /></Label>
+        <Input
+          id="audienceSize"
+          type="number"
+          inputMode="numeric"
+          required
+          min={1}
+          value={form.audienceSize}
+          onChange={(e) => update("audienceSize", e.target.value)}
+          placeholder="e.g. 150"
+        />
+      </div>
 
       <div className="space-y-1.5">
         <Label>Your Message</Label>
@@ -235,6 +253,14 @@ export default function BookingForm({ initialDate }: { initialDate?: string }) {
         {showMore ? "Hide extra details" : "Add more details (optional)"}
       </button>
 
+      {showMore && (
+        <div className="space-y-4 rounded-2xl bg-primary/10 p-4">
+          <div className="space-y-1.5">
+            <Label htmlFor="email">Email (optional)</Label>
+            <Input id="email" type="email" value={form.email} onChange={(e) => update("email", e.target.value)} />
+          </div>
+        </div>
+      )}
 
       <label className="flex items-start gap-3 text-xs text-muted-foreground">
         <Checkbox checked={form.consent} onCheckedChange={(v) => update("consent", v === true)} />

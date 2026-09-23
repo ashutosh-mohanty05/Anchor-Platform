@@ -55,7 +55,7 @@ export const bookingRequestSchema = z.object({
   preferredStartTime: z.string().regex(timeRegex).optional().or(z.literal("")),
   preferredEndTime: z.string().regex(timeRegex).optional().or(z.literal("")),
   location: z.string().max(300).optional().default(""),
-  audienceSize: z.coerce.number().min(0).max(1000000).optional(),
+  audienceSize: z.coerce.number({ invalid_type_error: "Audience size is required" }).min(1, "Audience size is required").max(1000000),
   message: z.string().max(2000).optional().default(""),
   consent: z.literal(true, {
     errorMap: () => ({ message: "Please confirm you understand this is just a request" }),
