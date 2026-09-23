@@ -212,6 +212,11 @@ export default function BookingForm({ initialDate }: { initialDate?: string }) {
       </div>
 
       <div className="space-y-1.5">
+  <Label>Expected Audience Size</Label>
+  <Input type="number" required min={1} value={form.audienceSize} onChange={(e) => update("audienceSize", e.target.value)} />
+</div>
+
+      <div className="space-y-1.5">
         <Label>Your Message</Label>
         <Textarea
           value={form.message}
@@ -230,18 +235,6 @@ export default function BookingForm({ initialDate }: { initialDate?: string }) {
         {showMore ? "Hide extra details" : "Add more details (optional)"}
       </button>
 
-      {showMore && (
-        <div className="space-y-4 rounded-2xl bg-secondary/60 p-3">
-          <div className="space-y-1.5">
-            <Label>Email (optional)</Label>
-            <Input type="email" value={form.email} onChange={(e) => update("email", e.target.value)} />
-          </div>
-          <div className="space-y-1.5">
-            <Label>Expected Audience Size</Label>
-            <Input type="number" required min={1} value={form.audienceSize} onChange={(e) => update("audienceSize", e.target.value)} />
-          </div>
-        </div>
-      )}
 
       <label className="flex items-start gap-3 text-xs text-muted-foreground">
         <Checkbox checked={form.consent} onCheckedChange={(v) => update("consent", v === true)} />
