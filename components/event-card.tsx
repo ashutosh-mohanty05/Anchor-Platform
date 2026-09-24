@@ -81,7 +81,16 @@ export default function EventCard({
             {formatTime12h(event.startTime)}–{formatTime12h(event.endTime)}
           </p>
           {event.venueName && <p className="text-xs text-muted-foreground">{event.venueName}</p>}
-          {event.fee ? <p className="mt-1 text-sm font-semibold">{formatINR(event.fee)}</p> : null}
+                    {event.fee ? (
+            <p className="mt-1 text-sm font-semibold">
+              {formatINR(event.fee)}
+              {event.advancePaid ? (
+                <span className="ml-2 text-xs font-normal text-muted-foreground">
+                  Paid {formatINR(event.advancePaid)} • Balance {formatINR(Math.max(event.fee - event.advancePaid, 0))}
+                </span>
+              ) : null}
+            </p>
+          ) : null}
         </div>
 
         <div className="relative">

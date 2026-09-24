@@ -32,6 +32,7 @@ const formSchema = z.object({
   clientPhone: z.string().optional(),
   clientEmail: z.string().optional(),
   fee: z.coerce.number().min(0).optional(),
+  advancePaid: z.coerce.number().min(0).optional(),
   paymentStatus: z.enum(PAYMENT_STATUSES),
   status: z.enum(EVENT_STATUSES),
   travelMinutes: z.coerce.number().min(0),
@@ -56,6 +57,7 @@ const DEFAULTS: FormValues = {
   clientPhone: "",
   clientEmail: "",
   fee: 0,
+  advancePaid: 0,
   paymentStatus: "Not discussed",
   status: "Enquiry",
   travelMinutes: 30,
@@ -85,7 +87,7 @@ export default function EventFormDialog({
   useEffect(() => {
     if (open) {
       if (event) {
-        reset({ ...DEFAULTS, ...event, fee: event.fee ?? 0 });
+        reset({ ...DEFAULTS, ...event, fee: event.fee ?? 0, advancePaid: event.advancePaid ?? 0 });
       } else {
         reset({ ...DEFAULTS, date: initialDate ?? "" });
       }
@@ -93,6 +95,17 @@ export default function EventFormDialog({
       setApiError(null);
     }
   }, [open, event, initialDate, reset]);
+
+    const feeVal = Number(watch("fee") || 0);
+  const advanceVal = Number(watch("advancePaid") || 0);
+
+  useEffect(() => {
+    if (advanceVal > 0 && feeVal > 0 && advanceVal >= feeVal) {
+      setValue("paymentStatus", "Fully paid");
+    } else if (advanceVal > 0) {
+      setValue("paymentStatus", "Advance received");
+    }
+  }, [advanceVal, feeVal, setValue]);
 
   async function onSubmit(values: FormValues, forceSaveWithWarning = false) {
     setSaving(true);
@@ -202,7 +215,7 @@ export default function EventFormDialog({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-2 gap-3">
             <div>
               <Label htmlFor="fee">Event Fee (₹)</Label>
               <Input id="fee" type="number" {...register("fee")} className="mt-1.5" />
@@ -217,6 +230,21 @@ export default function EventFormDialog({
               </Select>
             </div>
           </div>
+
+          {["Advance received", "Fully paid"].includes(watch("paymentStatus")) && (
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label htmlFor="advancePaid">Advance Paid (₹)</Label>
+                <Input id="advancePaid" type="number" {...register("advancePaid")} className="mt-1.5" />
+              </div>
+              <div>
+                <Label>Balance Due</Label>
+                <p className="mt-1.5 flex h-10 items-center rounded-xl bg-secondary px-3 text-sm font-semibold">
+                  ₹{Math.max(feeVal - advanceVal, 0).toLocaleString("en-IN")}
+                </p>
+              </div>
+            </div>
+          )}
 
           <div>
             <Label>Event Status</Label>

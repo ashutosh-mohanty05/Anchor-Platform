@@ -179,7 +179,9 @@ export default function Dashboard({ displayName, image }: { displayName: string;
             {pendingPayments.slice(0, 4).map((e) => (
               <div key={e._id} className="flex items-center justify-between text-sm">
                 <span>{e.title}</span>
-                <span className="font-semibold">{formatINR(e.fee)}</span>
+                <span className="font-semibold">
+                  {formatINR(Math.max((e.fee ?? 0) - (e.advancePaid ?? 0), 0))}
+                </span>
               </div>
             ))}
           </div>

@@ -21,6 +21,7 @@ const eventBaseSchema = z.object({
   clientPhone: z.string().max(20).optional().default(""),
   clientEmail: z.string().email().optional().or(z.literal("")).default(""),
   fee: z.coerce.number().min(0).optional().default(0),
+  advancePaid: z.coerce.number().min(0).optional().default(0),
   paymentStatus: z.enum(PAYMENT_STATUSES).default("Not discussed"),
   status: z.enum(EVENT_STATUSES).default("Enquiry"),
   travelMinutes: z.coerce.number().min(0).max(600).default(30),

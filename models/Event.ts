@@ -24,6 +24,7 @@ export interface IEvent {
   clientPhone: string;
   clientEmail?: string;
   fee?: number;
+  advancePaid?: number;
   paymentStatus: PaymentStatus;
   status: EventStatus;
   travelMinutes: number;
@@ -53,6 +54,7 @@ const EventSchema = new Schema<IEvent>(
     clientPhone: { type: String, default: "" },
     clientEmail: { type: String, default: "" },
     fee: { type: Number, default: 0 },
+    advancePaid: { type: Number, default: 0 },
     paymentStatus: { type: String, enum: PAYMENT_STATUSES, default: "Not discussed" },
     status: { type: String, enum: EVENT_STATUSES, default: "Enquiry" },
     travelMinutes: { type: Number, default: 30 },
