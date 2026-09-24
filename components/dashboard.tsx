@@ -53,7 +53,12 @@ export default function Dashboard({ displayName, image }: { displayName: string;
   const todaysEvents = upcoming.filter((e) => e.date === today);
   const morningEvent = todaysEvents.find((e) => e.slot === "Morning") ?? todaysEvents[0];
   const eveningEvent = todaysEvents.find((e) => e.slot === "Evening" && e._id !== morningEvent?._id);
-  const next7Days = upcoming.filter((e) => e.date !== today).slice(0, 6);
+  const weekEnd = new Date(`${today}T12:00:00`);
+        weekEnd.setDate(weekEnd.getDate() + 7);
+  const weekEndStr = weekEnd.toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
+  const next7Days = upcoming
+  .filter((e) => e.date !== today && e.date <= weekEndStr)
+  .slice(0, 6);
   const pendingPayments = events.filter((e) =>
     ["Pending", "Advance received"].includes(e.paymentStatus) && e.status !== "Cancelled"
   );
