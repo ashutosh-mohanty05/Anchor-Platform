@@ -30,10 +30,14 @@ export interface PushPayload {
  * Automatically forgets subscriptions the browser has revoked (410/404).
  */
 export async function sendPushToOwner(userId: string, payload: PushPayload): Promise<void> {
-  if (!ensureConfigured()) return;
+  if (!ensureConfigured()) {
+    console.error("Push skipped: VAPID keys not configured");
+    return;
+  }
 
   await connectToDatabase();
   const subs = await PushSubscription.find({ userId }).lean();
+  console.log(`Push: found ${subs.length} subscription(s) for userId ${userId}`);
   if (subs.length === 0) return;
 
   const body = JSON.stringify(payload);
@@ -45,10 +49,14 @@ export async function sendPushToOwner(userId: string, payload: PushPayload): Pro
           { endpoint: sub.endpoint, keys: sub.keys },
           body
         );
+        console.log(`Push sent OK to endpoint ending in ...${sub.endpoint.slice(-12)}`);
       } catch (err: unknown) {
         const statusCode = (err as { statusCode?: number })?.statusCode;
         if (statusCode === 404 || statusCode === 410) {
+          console.error(`Push subscription expired (${statusCode}), removing it`);
           await PushSubscription.deleteOne({ _id: sub._id });
+        } else {
+          console.error("Push send failed:", statusCode, (err as Error)?.message);
         }
       }
     })
