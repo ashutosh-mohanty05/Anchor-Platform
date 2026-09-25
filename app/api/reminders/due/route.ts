@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getOwnerUserId } from "@/lib/auth";
 import connectToDatabase from "@/lib/mongodb";
+import "@/models/Event";
 import Reminder from "@/models/Reminder";
 import { sendPushToOwner } from "@/lib/push";
 import { formatDateLong, formatTime12h } from "@/lib/utils";
