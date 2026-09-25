@@ -48,15 +48,20 @@ export async function subscribeToPush(): Promise<{ ok: boolean; reason?: string 
     existing ??
     (await reg.pushManager.subscribe({
       userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array(publicKey),
+      applicationServerKey: urlBase64ToUint8Array(publicKey) as BufferSource,
     }));
 
   const json = subscription.toJSON();
-  await fetch("/api/push/subscribe", {
+  const res = await fetch("/api/push/subscribe", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ endpoint: json.endpoint, keys: json.keys }),
   });
+
+  if (!res.ok) {
+    const errText = await res.text().catch(() => "");
+    return { ok: false, reason: `Server rejected the subscription (${res.status}): ${errText}` };
+  }
 
   return { ok: true };
 }
